@@ -11,7 +11,11 @@ const sequelize = new Sequelize('plant-tracking-data', 'root', 'root', {
     operatorsAliases: false
 });
 
+app.use(express.json());
+
 sequelize.authenticate();
+
+const Garden = sequelize.define('garden');
 
 const Plant = sequelize.define('plant', {
     nickname: { type: Sequelize.STRING },
@@ -22,31 +26,36 @@ const Plant = sequelize.define('plant', {
 
 const Sample = sequelize.define('sample', {
     sensorId: { type: Sequelize.INTEGER },
+    type: { type: Sequelize.STRING },
     value: { type: Sequelize.INTEGER },
     unit: { type: Sequelize.STRING }
 });
 
+Garden.hasMany(Plant);
 Plant.hasMany(Sample);
 
 // force: true will drop the table if it already exists
 sequelize.sync({force: true}).then(() => {
-    // Table created
-    plant = Plant.create({
-        plantId: 0,
-        nickname: "Caro",
-        genus: "Dracaena fragrans",
-        location: "Schlafzimmer",
-        picture: "/images/c786defb5cb4463a109bc81e39e18f08.jpg"
-    }).then((plant) => {
-        sample = Sample.create({
-            sensorId: 0,
-            value: 24,
-            unit: "celsius",
-            plantId: plant.get('id')
-        });
-    });
 });
 
 app.get('/', (req, res) => res.send('Hello World!'));
+
+app.post('/api/samples', (req, res) => {
+    const body = req.body;
+
+    Plant.findOrCreate({ where: {
+        id: body.plantId
+    }}).spread((plant, created) => {
+        sample = Sample.create({
+            sensorId: body.sensorId,
+            plantId: plant.get('id'),
+            type: body.type,
+            value: body.value,
+            unit: body.unit
+        }).then((sample) => {
+            res.json(sample);
+        });
+    }).catch()
+});
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
