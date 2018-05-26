@@ -13,21 +13,37 @@ const sequelize = new Sequelize('plant-tracking-data', 'root', 'root', {
 
 sequelize.authenticate();
 
-const PlantSample = sequelize.define('plant_sample', {
+const Plant = sequelize.define('plant', {
+    nickname: { type: Sequelize.STRING },
+    genus: { type: Sequelize.STRING },
+    location: { type: Sequelize.STRING },
+    picture: { type: Sequelize.STRING }
+});
+
+const Sample = sequelize.define('sample', {
     sensorId: { type: Sequelize.INTEGER },
-    timestamp: { type: Sequelize.INTEGER },
     value: { type: Sequelize.INTEGER },
     unit: { type: Sequelize.STRING }
 });
 
+Plant.hasMany(Sample);
+
 // force: true will drop the table if it already exists
-PlantSample.sync({force: true}).then(() => {
+sequelize.sync({force: true}).then(() => {
     // Table created
-    return PlantSample.create({
-        sensorId: 0,
-        timestamp: 1527347005,
-        value: 24,
-        unit: "celsius"
+    plant = Plant.create({
+        plantId: 0,
+        nickname: "Caro",
+        genus: "Dracaena fragrans",
+        location: "Schlafzimmer",
+        picture: "/images/c786defb5cb4463a109bc81e39e18f08.jpg"
+    }).then((plant) => {
+        sample = Sample.create({
+            sensorId: 0,
+            value: 24,
+            unit: "celsius",
+            plantId: plant.get('id')
+        });
     });
 });
 
