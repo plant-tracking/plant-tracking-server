@@ -1,0 +1,19 @@
+{
+  "name": "plant-tracking-server",
+  "version": "0.0.1",
+  "description": "Express-based server for collecting plant sensor measurements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plant-tracking/plant-tracking-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plant-tracking/plant-tracking-server/issues"
+  },
+  "homepage": "https://github.com/plant-tracking/plant-tracking-server#readme"
+}
