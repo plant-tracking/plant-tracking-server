@@ -49,6 +49,32 @@ app.get('/api/samples/list', (req, res) => {
     });
 });
 
+app.get('/api/:plantId/samples', (req, res) => {
+    const plantId = req.params.plantId;
+
+    Sample.findAll({
+        where: {plantId: plantId}
+    }).then((result) => {
+        res.json(result);
+    });
+});
+
+app.get('/api/:plantId/graphData', (req, res) => {
+    const plantId = req.params.plantId;
+    const type = req.query.type;
+
+    Sample.findAll({
+        attributes: ['value', 'updatedAt'],
+        where: {
+            plantId: plantId,
+            type: type
+        }
+    }).then((result) => {
+        res.json(result);
+    });
+});
+
+
 app.get('/api/plants/list', (req, res) => {
     Plant.findAll({}).then((result) => {
         res.json(result);
