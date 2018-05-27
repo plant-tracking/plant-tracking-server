@@ -42,9 +42,15 @@ sequelize.sync({force: true}).then(() => {
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
-app.get('/list', (req, res) => {
+app.get('/api/samples/list', (req, res) => {
     Sample.findAll({
     }).then((result) => {
+        res.json(result);
+    });
+});
+
+app.get('/api/plants/list', (req, res) => {
+    Plant.findAll({}).then((result) => {
         res.json(result);
     });
 });
