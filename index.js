@@ -91,6 +91,18 @@ sequelize.sync({force: true}).then(() => {
         },
         defaults: {
             type: "light",
+            lowerThreshold: 0.0,
+            higherThreshold: 8.0,
+            plantId: "1"
+        }
+    });
+    Optimum.findOrCreate({
+        where: {
+            type: "uv",
+            plantId: 1
+        },
+        defaults: {
+            type: "uv",
             lowerThreshold: 60000.0,
             higherThreshold: 67000.0,
             plantId: "1"
