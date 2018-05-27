@@ -71,7 +71,7 @@ app.get('/api/:plantId/graphData', (req, res) => {
     const type = req.query.type;
 
     Sample.findAll({
-        attributes: ['value', 'updatedAt'],
+        attributes: ['value', 'updatedAt', 'unit'],
         where: {
             plantId: plantId,
             type: type
