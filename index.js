@@ -79,7 +79,7 @@ app.get('/api/:plantId/graphData', (req, res) => {
         limit: 15,
         order: [['updatedAt', 'DESC']]
     }).then((result) => {
-        res.json(result);
+        res.json(result.reverse());
     });
 });
 
