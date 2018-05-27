@@ -68,7 +68,9 @@ app.get('/api/:plantId/graphData', (req, res) => {
         where: {
             plantId: plantId,
             type: type
-        }
+        },
+        limit: 15,
+        order: [['updatedAt', 'DESC']]
     }).then((result) => {
         res.json(result);
     });
