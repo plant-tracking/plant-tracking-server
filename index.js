@@ -1,9 +1,11 @@
+require('dotenv').config()
+
 const express = require('express');
 const Sequelize = require('sequelize');
 
 const app = express();
 
-const sequelize = new Sequelize('plant-tracking-data', 'root', 'root', {
+const sequelize = new Sequelize(process.env.DATABASE_NAME, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
     host: 'localhost',
     dialect: 'mysql',
 
@@ -58,4 +60,4 @@ app.post('/api/samples', (req, res) => {
     }).catch()
 });
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(process.env.PORT, () => console.log('Example app listening on port' + process.env.PORT + '!'));
