@@ -53,8 +53,8 @@ sequelize.sync({force: true}).then(() => {
         },
         defaults: {
             type: "temp",
-            lowerThreshold: 18.0,
-            higherThreshold: 27.0,
+            lowerThreshold: 13.0,
+            higherThreshold: 30.0,
             plantId: "1"
         }
     });
@@ -78,8 +78,8 @@ sequelize.sync({force: true}).then(() => {
         },
         defaults: {
             type: "groundmoisture",
-            lowerThreshold: 900.0,
-            higherThreshold: 1200.0,
+            lowerThreshold: 350.0,
+            higherThreshold: 800.0,
             plantId: "1"
         }
     });
