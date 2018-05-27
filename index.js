@@ -42,6 +42,13 @@ sequelize.sync({force: true}).then(() => {
 
 app.get('/', (req, res) => res.send('Hello World!'));
 
+app.get('/list', (req, res) => {
+    Sample.findAll({
+    }).then((result) => {
+        res.json(result);
+    });
+});
+
 app.post('/api/samples', (req, res) => {
     const body = req.body;
 
