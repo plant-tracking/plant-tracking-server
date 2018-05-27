@@ -29,7 +29,7 @@ const Plant = sequelize.define('plant', {
 const Sample = sequelize.define('sample', {
     sensorId: { type: Sequelize.INTEGER },
     type: { type: Sequelize.STRING },
-    value: { type: Sequelize.INTEGER },
+    value: { type: Sequelize.FLOAT },
     unit: { type: Sequelize.STRING }
 });
 
