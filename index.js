@@ -91,18 +91,6 @@ sequelize.sync({force: true}).then(() => {
         },
         defaults: {
             type: "light",
-            lowerThreshold: 0.0,
-            higherThreshold: 8.0,
-            plantId: "1"
-        }
-    });
-    Optimum.findOrCreate({
-        where: {
-            type: "uv",
-            plantId: 1
-        },
-        defaults: {
-            type: "uv",
             lowerThreshold: 60000.0,
             higherThreshold: 67000.0,
             plantId: "1"
@@ -199,15 +187,16 @@ app.post('/api/samples', (req, res) => {
     Plant.findOrCreate({ where: {
         id: body.plantId
     }}).spread((plant, created) => {
-        Optimum.findOne({
+        console.log(body.type)
+	Optimum.findOne({
             where: {
                 type: body.type,
-                plantId: plant.get('id')
+                plantId: 1
             },
         }).then((optimum) => {
-            if(body.value > optimum.higherThreshold)
+            if(optimum !== null && body.value > optimum.higherThreshold)
                 status = 2
-            else if(body.value < optimum.lowerThreshold)
+            else if(optimum !== null && body.value < optimum.lowerThreshold)
                 status = 0
             else
                 status = 1
